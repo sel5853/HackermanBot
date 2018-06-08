@@ -56,6 +56,24 @@ public class Field {
         this.bombPositions = new ArrayList<>();
         this.tickingBombPositions = new ArrayList<>();
     }
+    
+    //Translates the node next to us into the MoveType required to get there
+    public MoveType moveTo(Node x)
+    {
+    	int myX = myPosition.x;
+    	int myY = myPosition.y;
+    	int nodeX = x.getPoint().x;
+    	int nodeY = x.getPoint().y;
+    	
+    	if(nodeY == myY-1) return MoveType.UP;
+    	if(nodeY == myY+1) return MoveType.DOWN;
+    	if(nodeX == myY-1) return MoveType.LEFT;
+    	if(nodeX == myY+1) return MoveType.RIGHT;
+    
+    	return MoveType.PASS;
+    }
+    
+    
 
     /**
      * Initializes field
