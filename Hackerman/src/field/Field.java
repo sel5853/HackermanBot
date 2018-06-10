@@ -21,6 +21,7 @@ package field;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import move.MoveType;
 
@@ -237,6 +238,49 @@ public class Field {
         return x >= 0 && x < this.width && y >= 0 && y < this.height &&
                 !this.field[x][y].contains(BLOCKED_FIELD);
     }
+    
+    public ArrayList<Node> moveTowards(Point x)
+    {
+    	Node goal = new Node(x);
+    	Queue<Node> queue = new LinkedList<>();
+    	ArrayList<Node> explored = new ArrayList<Node>();
+    	ArrayList<Node> path = new ArrayList<Node>();
+    	
+    	queue.add(new Node(this.myPosition,getChildren(this.myPosition)));
+    	
+    	while(!queue.isEmpty())
+    	{
+    		Node current = queue.remove();
+    		
+    		if(current.equals(goal))
+    		{
+    			
+    			while(current.getParent() != null)
+    			{
+    				path.add(0, current);
+    				current = current.getParent();
+    			}
+    			return path;
+    		}
+    		
+    		else
+    		{
+    			explored.add(current);
+    			for(Node z: current.getChildren())
+    			{
+    					if(!explored.contains(z) && !queue.contains(z))
+    					{
+    						z.setParent(current);
+    						z.setChildren(getChildren(z.getPoint()));
+    						queue.add(z);
+    					}
+    			}
+    		
+    		}
+    	}
+    	return path;
+    	
+    }
 
     public void setMyId(int id) {
         this.myId = id + "";
@@ -277,4 +321,6 @@ public class Field {
     public ArrayList<Point> getTickingBombPositions() {
         return this.tickingBombPositions;
     }
+    
+    
 }

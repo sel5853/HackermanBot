@@ -8,6 +8,7 @@ public class Node {
 	Point point;
 	ArrayList<Node> children;
 	Node parent;
+	private Node parents;
 	
 	public Node(Point x)
 	{
@@ -43,5 +44,10 @@ public class Node {
 		Node check = (Node)x;
 		//System.err.print(this.point + " " + check.point);
 		return(check.point.equals(this.point));
+	}
+
+	public Object getPoint() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
